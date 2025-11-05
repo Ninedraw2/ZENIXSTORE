@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenixStore - Contas Premium de Blox Fruits, King Legacy e Brainrots</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --primary-dark: #6a1cb0;
+            --primary-light: #9d4edd;
+            --primary-extra-light: #b47cff;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #121212;
+            --card-hover: #1a1a1a;
+            --light-text: #f0f0f0;
+            --medium-text: #a0a0a0;
+            --accent: #8a2be2;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header e Navegação */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.8rem;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-light);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+        }
+
+        .user-actions a {
+            color: var(--light-text);
+            text-decoration: none;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .user-actions a:hover {
+            color: var(--primary-light);
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .cart-icon:hover {
+            color: var(--primary-light);
+            transform: scale(1.1);
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        /* Container principal com transições */
+        .main-container {
+            position: relative;
+            min-height: 100vh;
+            margin-top: 80px;
+        }
+
+        /* Seções principais com transições */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease-in-out;
+            transform: translateY(20px);
+        }
+
+        section.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            transition: all 0.5s ease;
+            font-weight: 700;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.5s ease;
+        }
+
+        /* Hero Section Aprimorada */
+        .hero {
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 40%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+                linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 30px 30px;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Partículas animadas no fundo */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 12px;
+            height: 12px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(4) {
+            width: 10px;
+            height: 10px;
+            top: 30%;
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(5) {
+            width: 14px;
+            height: 14px;
+            top: 70%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--medium-text);
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.8s ease 0.4s both;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--medium-text);
+        }
+
+        .hero .btn {
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Produtos Aprimorados */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, var(--card-bg), var(--darker-bg));
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+
+        .product-image {
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--darker-bg));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-image:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover .product-image:before {
+            opacity: 1;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: var(--medium-text);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .product-features li {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: var(--medium-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .product-features li:before {
+            content: '✓';
+            color: var(--success);
+            margin-right: 0.8rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-price .old-price {
+            font-size: 1.2rem;
+            color: var(--medium-text);
+            text-decoration: line-through;
+            margin-right: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        /* Formulários Aprimorados */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, var(--card-bg), var(--darker-bg));
+            padding: 3rem;
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.4s; }
+        .form-group:nth-child(2) { animation-delay: 0.5s; }
+        .form-group:nth-child(3) { animation-delay: 0.6s; }
+        .form-group:nth-child(4) { animation-delay: 0.7s; }
+        .form-group:nth-child(5) { animation-delay: 0.8s; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--darker-bg);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .form-switch {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--medium-text);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease 0.9s both;
+        }
+
+        .form-switch a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-switch a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        /* Contato Aprimorado */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            background: linear-gradient(145deg, var(--card-bg), var(--darker-bg));
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+            text-align: center;
+        }
+
+        .contact-item:nth-child(1) { animation-delay: 0.3s; }
+        .contact-item:nth-child(2) { animation-delay: 0.4s; }
+        .contact-item:nth-child(3) { animation-delay: 0.5s; }
+        .contact-item:nth-child(4) { animation-delay: 0.6s; }
+
+        .contact-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(138, 43, 226, 0.5);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.2);
+        }
+
+        .contact-item i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+            font-size: 1.3rem;
+        }
+
+        .contact-item p {
+            color: var(--medium-text);
+            line-height: 1.6;
+        }
+
+        /* Footer Aprimorado */
+        footer {
+            background: linear-gradient(135deg, var(--darker-bg) 0%, #080808 100%);
+            padding: 5rem 2rem 2rem;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--medium-text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:before {
+            content: '›';
+            margin-right: 0.5rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover:before {
+            transform: translateX(3px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(138, 43, 226, 0.2);
+            color: var(--medium-text);
+            font-size: 0.9rem;
+        }
+
+        /* Modal Carrinho Aprimorado */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 5, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, var(--card-bg), var(--darker-bg));
+            width: 90%;
+            max-width: 800px;
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--medium-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(138, 43, 226, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+            }
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header e Navegação -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <span>ZenixStore</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active" data-section="home">Início</a></li>
+                <li><a href="#products" class="nav-link" data-section="products">Produtos</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">Sobre Nós</a></li>
+                <li><a href="#register" class="nav-link" data-section="register">Registrar</a></li>
+                <li><a href="#login" class="nav-link" data-section="login">Login</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contato</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="user-actions">
+                    <a href="#login" class="nav-link" data-section="login" id="login-link">Entrar</a>
+                </div>
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container Principal -->
+    <div class="main-container">
+        <!-- Seção Hero/Início -->
+        <section id="home" class="active">
+            <div class="hero">
+                <!-- Partículas animadas -->
+                <div class="particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+                
+                <div class="hero-content">
+                    <h1>ZENIXSTORE</h1>
+                    <p>A loja definitiva para contas premium de Blox Fruits, King Legacy e Brainrots. Contas verificadas, suporte 24/7 e as melhores ofertas do mercado!</p>
+                    
+
+                    
+                    <div class="mt-2">
+                        <a href="#products" class="btn nav-link" data-section="products">Explorar Produtos</a>
+                        <a href="#about" class="btn btn-outline nav-link" data-section="about" style="margin-left: 1rem;">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Produtos -->
+        <section id="products">
+            <h2 class="section-title">Nossos Produtos</h2>
+            <div class="products-grid">
+                <!-- Produto 1 - Blox Fruits -->
+                <div class="product-card">
+                    <div class="product-badge">Mais Vendido</div>
+                    <div class="product-image">
+                        <i class="fas fa-fish-fins"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Conta Blox Fruits Premium</h3>
+                        <p class="product-description">Conta com frutas raras, alto nível, beli e acessórios exclusivos. Perfeita para dominar o jogo!</p>
+                        <ul class="product-features">
+                            <li>Frutas Lendárias (2-3)</li>
+                            <li>Nível 1000+</li>
+                            <li>Beli: 2M+</li>
+                            <li>Acessórios Raros</li>
+                            <li>Conta Verificada</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="old-price">R$ 49,90</span>
+                            <span>R$ 39,90</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-product="Blox Fruits Premium" data-price="39.90">Comprar Agora</button>
+                            <button class="btn btn-small btn-outline">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produto 2 - King Legacy -->
+                <div class="product-card">
+                    <div class="product-badge">Oferta</div>
+                    <div class="product-image">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Conta King Legacy Elite</h3>
+                        <p class="product-description">Conta com frutas lendárias, alto nível, beli e itens exclusivos. Torne-se um rei!</p>
+                        <ul class="product-features">
+                            <li>Frutas Lendárias (2-3)</li>
+                            <li>Nível 1500+</li>
+                            <li>Beli: 3M+</li>
+                            <li>Itens Exclusivos</li>
+                            <li>Conta Verificada</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="old-price">R$ 54,90</span>
+                            <span>R$ 44,90</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-product="King Legacy Elite" data-price="44.90">Comprar Agora</button>
+                            <button class="btn btn-small btn-outline">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produto 3 - Brainrots -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Conta Brainrots Pro</h3>
+                        <p class="product-description">Conta com itens exclusivos, progresso avançado e recursos premium. Domine o jogo!</p>
+                        <ul class="product-features">
+                            <li>Itens Exclusivos</li>
+                            <li>Progresso Avançado</li>
+                            <li>Recursos Premium</li>
+                            <li>Suporte Prioritário</li>
+                            <li>Conta Verificada</li>
+                        </ul>
+                        <div class="product-price">
+                            <span>R$ 34,90</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-product="Brainrots Pro" data-price="34.90">Comprar Agora</button>
+                            <button class="btn btn-small btn-outline">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produto 4 - Pacote Completo -->
+                <div class="product-card">
+                    <div class="product-badge">Economize 30%</div>
+                    <div class="product-image">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pacote Completo</h3>
+                        <p class="product-description">Contas premium de todos os três jogos com descontos especiais e bônus exclusivos!</p>
+                        <ul class="product-features">
+                            <li>Contas de Todos os Jogos</li>
+                            <li>Bônus Exclusivos</li>
+                            <li>Suporte VIP</li>
+                            <li>Garantia Estendida</li>
+                            <li>Atualizações Gratuitas</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="old-price">R$ 129,70</span>
+                            <span>R$ 89,90</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-small add-to-cart" data-product="Pacote Completo" data-price="89.90">Comprar Agora</button>
+                            <button class="btn btn-small btn-outline">Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Sobre Nós -->
+        <section id="about">
+            <h2 class="section-title">Sobre Nós</h2>
+            <div class="form-container">
+                <h3 class="text-center" style="margin-bottom: 1.5rem; color: var(--primary-light);">Por que escolher a ZenixStore?</h3>
+                <p style="margin-bottom: 1.5rem; color: var(--medium-text); text-align: center;">
+                    A ZenixStore é a loja mais confiável do mercado quando o assunto é contas de jogos. Com mais de 5 anos de experiência, já atendemos mais de 10.000 clientes satisfeitos em todo o Brasil.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2rem;">
+                    <div class="contact-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Segurança</h3>
+                        <p>Todas as contas são verificadas e 100% seguras.</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-headset"></i>
+                        <h3>Suporte 24/7</h3>
+                        <p>Nossa equipe está disponível a qualquer hora para ajudar.</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Entrega Rápida</h3>
+                        <p>Receba sua conta em até 10 minutos após a confirmação do pagamento.</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-medal"></i>
+                        <h3>Qualidade</h3>
+                        <p>Contas premium com os melhores itens e progresso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Registro -->
+        <section id="register">
+            <h2 class="section-title">Criar uma Conta</h2>
+            <div class="form-container">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="reg-username">Nome de Usuário</label>
+                        <input type="text" id="reg-username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">E-mail</label>
+                        <input type="email" id="reg-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Senha</label>
+                        <input type="password" id="reg-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirmar Senha</label>
+                        <input type="password" id="reg-confirm-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" required> Aceito os <a href="#terms" class="nav-link" data-section="terms">Termos de Serviço</a> e <a href="#privacy" class="nav-link" data-section="privacy">Política de Privacidade</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Criar Conta</button>
+                    <div class="form-switch">
+                        Já tem uma conta? <a href="#login" class="nav-link" data-section="login">Faça login</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Seção de Login -->
+        <section id="login">
+            <h2 class="section-title">Fazer Login</h2>
+            <div class="form-container">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-username">Nome de Usuário ou E-mail</label>
+                        <input type="text" id="login-username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox"> Lembrar de mim
+                        </label>
+                        <a href="#" style="float: right; color: var(--primary);">Esqueceu a senha?</a>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Entrar</button>
+                    <div class="form-switch">
+                        Não tem uma conta? <a href="#register" class="nav-link" data-section="register">Registre-se</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Seção de Contato -->
+        <section id="contact">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contact-container">
+                <div class="form-container">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contact-name">Seu Nome</label>
+                            <input type="text" id="contact-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Seu E-mail</label>
+                            <input type="email" id="contact-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Assunto</label>
+                            <input type="text" id="contact-subject" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Mensagem</label>
+                            <textarea id="contact-message" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Enviar Mensagem</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h3>E-mail</h3>
+                        <p>contato@zenixstore.com</p>
+                        <p>suporte@zenixstore.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-discord"></i>
+                        <h3>Discord</h3>
+                        <p>zenixstore#1234</p>
+                        <p>Junte-se ao nosso servidor</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <h3>WhatsApp</h3>
+                        <p>(11) 99999-9999</p>
+                        <p>Atendimento rápido</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <h3>Horário de Atendimento</h3>
+                        <p>24 horas por dia</p>
+                        <p>7 dias por semana</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Termos de Serviço -->
+        <section id="terms">
+            <h2 class="section-title">Termos de Serviço</h2>
+            <div class="page-content">
+                <h2>Termos e Condições de Uso da ZenixStore</h2>
+                
+                <h3>1. Aceitação dos Termos</h3>
+                <p>Ao acessar e usar os serviços da ZenixStore, você concorda em cumprir e estar vinculado a estes termos e condições de uso.</p>
+                
+                <h3>2. Serviços Oferecidos</h3>
+                <p>A ZenixStore oferece contas de jogos digitais, incluindo Blox Fruits, King Legacy e Brainrots. Todas as contas são verificadas e garantidas.</p>
+                
+                <h3>3. Compra e Entrega</h3>
+                <p>Após a confirmação do pagamento, a conta adquirida será enviada em até 24 horas para o e-mail cadastrado. Em casos de atraso, entre em contato com nosso suporte.</p>
+                
+                <h3>4. Garantias e Reembolsos</h3>
+                <p>Oferecemos garantia de 7 dias para problemas com as contas adquiridas. Reembolsos são avaliados caso a caso mediante análise de nossa equipe.</p>
+                
+                <h3>5. Responsabilidades do Usuário</h3>
+                <p>O usuário é responsável por:</p>
+                <ul>
+                    <li>Fornecer informações verdadeiras no cadastro</li>
+                    <li>Manter a segurança de sua conta</li>
+                    <li>Utilizar os serviços de acordo com a lei</li>
+                    <li>Não revender contas adquiridas</li>
+                </ul>
+                
+                <h3>6. Modificações nos Termos</h3>
+                <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. Alterações serão comunicadas aos usuários.</p>
+                
+                <p><em>Última atualização: 01/01/2023</em></p>
+            </div>
+        </section>
+
+        <!-- Seção Política de Privacidade -->
+        <section id="privacy">
+            <h2 class="section-title">Política de Privacidade</h2>
+            <div class="page-content">
+                <h2>Política de Privacidade da ZenixStore</h2>
+                
+                <h3>1. Coleta de Informações</h3>
+                <p>Coletamos informações pessoais como nome, e-mail e dados de pagamento quando você se cadastra ou realiza uma compra em nossa plataforma.</p>
+                
+                <h3>2. Uso das Informações</h3>
+                <p>Utilizamos suas informações para:</p>
+                <ul>
+                    <li>Processar suas transações</li>
+                    <li>Enviar contas adquiridas</li>
+                    <li>Oferecer suporte ao cliente</li>
+                    <li>Enviar comunicações importantes</li>
+                </ul>
+                
+                <h3>3. Proteção de Dados</h3>
+                <p>Implementamos medidas de segurança para proteger suas informações contra acesso não autorizado, alteração ou destruição.</p>
+                
+                <h3>4. Compartilhamento de Dados</h3>
+                <p>Não vendemos ou compartilhamos suas informações pessoais com terceiros, exceto quando necessário para processar pagamentos ou cumprir obrigações legais.</p>
+                
+                <h3>5. Cookies</h3>
+                <p>Utilizamos cookies para melhorar sua experiência em nosso site e personalizar conteúdo.</p>
+                
+                <h3>6. Seus Direitos</h3>
+                <p>Você tem direito a acessar, corrigir ou excluir suas informações pessoais a qualquer momento entrando em contato conosco.</p>
+                
+                <p><em>Última atualização: 01/01/2023</em></p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>ZenixStore</h3>
+                <p>A melhor loja de contas de jogos do Brasil. Qualidade, segurança e confiabilidade.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Produtos</h3>
+                <ul class="footer-links">
+                    <li><a href="#products" class="nav-link" data-section="products">Blox Fruits</a></li>
+                    <li><a href="#products" class="nav-link" data-section="products">King Legacy</a></li>
+                    <li><a href="#products" class="nav-link" data-section="products">Brainrots</a></li>
+                    <li><a href="#products" class="nav-link" data-section="products">Pacotes</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Suporte</h3>
+                <ul class="footer-links">
+                    <li><a href="#contact" class="nav-link" data-section="contact">Central de Ajuda</a></li>
+                    <li><a href="#terms" class="nav-link" data-section="terms">Termos de Serviço</a></li>
+                    <li><a href="#privacy" class="nav-link" data-section="privacy">Política de Privacidade</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Pagamento</h3>
+                <ul class="footer-links">
+                    <li>Cartão de Crédito</li>
+                    <li>Pix</li>
+                    <li>Boleto</li>
+                    <li>PayPal</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 ZenixStore. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- Modal Carrinho -->
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-light);">Seu Carrinho</h2>
+            <div id="cart-items">
+                <!-- Itens do carrinho serão adicionados aqui -->
+                <p id="empty-cart-message">Seu carrinho está vazio</p>
+            </div>
+            <div id="cart-total" style="margin-top: 1.5rem; text-align: right; font-size: 1.2rem; display: none;">
+                <strong>Total: R$ <span id="total-amount">0,00</span></strong>
+            </div>
+            <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+                <button class="btn btn-outline" id="continue-shopping">Continuar Comprando</button>
+                <button class="btn" id="checkout" style="display: none;">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de navegação entre seções com transições
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar apenas a seção inicial
+            showSection('home');
+            
+            // Configurar eventos de navegação
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    navigateToSection(sectionId);
+                    
+                    // Atualizar navegação ativa
+                    document.querySelectorAll('.nav-link').forEach(nav => {
+                        nav.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+        });
+
+        // Função para navegar entre seções com transição
+        function navigateToSection(sectionId) {
+            const currentSection = document.querySelector('section.active');
+            const targetSection = document.getElementById(sectionId);
+            
+            if (currentSection && targetSection && currentSection !== targetSection) {
+                // Iniciar transição
+                currentSection.classList.remove('active');
+                
+                // Aguardar a transição de saída terminar
+                setTimeout(() => {
+                    targetSection.classList.add('active');
+                }, 300);
+            } else if (targetSection && !currentSection) {
+                // Primeira navegação
+                targetSection.classList.add('active');
+            }
+            
+            // Rolar para o topo
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Função para mostrar seção (para uso externo)
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }
+
+        // Carrinho de compras
+        let cart = [];
+        const cartButtons = document.querySelectorAll('.add-to-cart');
+        const cartCountElement = document.querySelector('.cart-count');
+        const cartIcon = document.getElementById('cart-icon');
+        const cartModal = document.getElementById('cart-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const continueShopping = document.getElementById('continue-shopping');
+        const checkoutBtn = document.getElementById('checkout');
+        const cartItems = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartTotal = document.getElementById('cart-total');
+        const totalAmount = document.getElementById('total-amount');
+        
+        // Adicionar produto ao carrinho
+        cartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const product = this.getAttribute('data-product');
+                const price = parseFloat(this.getAttribute('data-price'));
+                
+                // Verificar se o produto já está no carrinho
+                const existingItem = cart.find(item => item.product === product);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        product: product,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                showNotification(`${product} foi adicionado ao carrinho!`);
+            });
+        });
+        
+        // Atualizar carrinho
+        function updateCart() {
+            // Atualizar contador
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCountElement.textContent = totalItems;
+            
+            // Atualizar modal do carrinho
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartTotal.style.display = 'none';
+                checkoutBtn.style.display = 'none';
+            } else {
+                emptyCartMessage.style.display = 'none';
+                cartTotal.style.display = 'block';
+                checkoutBtn.style.display = 'block';
+                
+                // Calcular total
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalAmount.textContent = total.toFixed(2).replace('.', ',');
+                
+                // Limpar e adicionar itens
+                cartItems.innerHTML = '';
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+                    itemElement.style.display = 'flex';
+                    itemElement.style.justifyContent = 'space-between';
+                    itemElement.style.alignItems = 'center';
+                    itemElement.style.padding = '1rem 0';
+                    itemElement.style.borderBottom = '1px solid rgba(138, 43, 226, 0.2)';
+                    
+                    itemElement.innerHTML = `
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem; color: var(--primary-light);">${item.product}</h4>
+                            <div style="display: flex; align-items: center;">
+                                <button class="quantity-btn" data-index="${index}" data-action="decrease">-</button>
+                                <span style="margin: 0 1rem;">${item.quantity}</span>
+                                <button class="quantity-btn" data-index="${index}" data-action="increase">+</button>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: bold; color: var(--primary);">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
+                            <button class="remove-btn" data-index="${index}" style="background: none; border: none; color: var(--danger); cursor: pointer; margin-top: 0.5rem;">Remover</button>
+                        </div>
+                    `;
+                    
+                    cartItems.appendChild(itemElement);
+                });
+                
+                // Adicionar eventos aos botões de quantidade e remover
+                document.querySelectorAll('.quantity-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const action = this.getAttribute('data-action');
+                        
+                        if (action === 'increase') {
+                            cart[index].quantity += 1;
+                        } else if (action === 'decrease' && cart[index].quantity > 1) {
+                            cart[index].quantity -= 1;
+                        }
+                        
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart.splice(index, 1);
+                        updateCart();
+                    });
+                });
+            }
+        }
+        
+        // Abrir modal do carrinho
+        cartIcon.addEventListener('click', function() {
+            cartModal.classList.add('active');
+        });
+        
+        // Fechar modal do carrinho
+        closeModal.addEventListener('click', function() {
+            cartModal.classList.remove('active');
+        });
+        
+        continueShopping.addEventListener('click', function() {
+            cartModal.classList.remove('active');
+        });
+        
+        checkoutBtn.addEventListener('click', function() {
+            alert('Redirecionando para o checkout...');
+            cartModal.classList.remove('active');
+        });
+        
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', function(e) {
+            if (e.target === cartModal) {
+                cartModal.classList.remove('active');
+            }
+        });
+        
+        // Notificação
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.background = 'var(--gradient)';
+            notification.style.color = 'white';
+            notification.style.padding = '1rem 1.5rem';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+            notification.style.zIndex = '3000';
+            notification.style.transition = 'all 0.3s ease';
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(20px)';
+            
+            document.body.appendChild(notification);
+            
+            // Animação de entrada
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Formulários
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                showNotification('As senhas não coincidem!');
+                return;
+            }
+            
+            showNotification('Conta criada com sucesso! Faça login para continuar.');
+            navigateToSection('login');
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Login realizado com sucesso!');
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
